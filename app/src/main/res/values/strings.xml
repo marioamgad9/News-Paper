@@ -5,6 +5,6 @@
     <!--Article Item-->
     <string name="article_title_placeholder">Is the Tesla Roadster Flying on the Falcon Heavy\'s
         Maiden Flight Just Space Junk? </string>
-    <string name="article_date_placeholder">Published at: 07–02–2018</string>
+    <string name="article_date">Published at: %1$s</string>
 
 </resources>
