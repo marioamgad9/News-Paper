@@ -27,7 +27,7 @@ public class ApiUtils {
 
     private ApiUtils() { }
 
-    public static List<Article> fetchHeadlinesUrl() {
+    public static List<Article> fetchHeadlineArticles() {
         URL url = createHeadlinesUrl();
 
         String jsonResponse = null;
