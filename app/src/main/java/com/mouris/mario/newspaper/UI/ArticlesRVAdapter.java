@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mouris.mario.newspaper.Data.Article;
@@ -13,7 +14,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.ArticleViewHolder> {
 
@@ -52,7 +52,7 @@ public class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.Ar
 
     static class ArticleViewHolder extends RecyclerView.ViewHolder {
 
-        CircleImageView imageView;
+        ImageView imageView;
         TextView titleTextView;
         TextView publishDateTextView;
 
