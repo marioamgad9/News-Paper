@@ -15,9 +15,10 @@ public class ArticlesRepository {
 
     private static ArticlesRepository sInstance;
 
-    public ArticlesRepository getInstance(ArticlesDao articlesDao) {
-        if (sInstance == null)
+    public static ArticlesRepository getInstance(ArticlesDao articlesDao) {
+        if (sInstance == null) {
             sInstance = new ArticlesRepository(articlesDao);
+        }
         return sInstance;
     }
 

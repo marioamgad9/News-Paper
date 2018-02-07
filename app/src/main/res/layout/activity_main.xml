@@ -6,7 +6,7 @@
     tools:context="com.mouris.mario.newspaper.UI.MainActivity">
 
     <fragment
-        android:name="com.mouris.mario.newspaper.UI.RecentNews.RecentNewsFragment"
+        class="com.mouris.mario.newspaper.UI.RecentNews.RecentNewsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recentNewsFragment" />
