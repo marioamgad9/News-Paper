@@ -24,7 +24,6 @@ public class RecentNewsViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Article>> getHeadlineArticles() {
-        refreshHeadlineArticles();
         return mRepository.getHeadlineArticles();
     }
 

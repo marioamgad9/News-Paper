@@ -3,6 +3,7 @@ package com.mouris.mario.newspaper.UI.RecentNews;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,9 +17,7 @@ public class RecentNewsFragment extends Fragment {
 
     private RecentNewsViewModel mViewModel;
 
-    public RecentNewsFragment() {
-        // Required empty public constructor
-    }
+    public RecentNewsFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,6 +25,11 @@ public class RecentNewsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_recent_news, container, false);
 
         mViewModel = ViewModelProviders.of(this).get(RecentNewsViewModel.class);
+
+        SwipeRefreshLayout mSwipeRefreshLayout = rootView.findViewById(R.id.newsSwipeRefresh);
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            mViewModel.refreshHeadlineArticles();
+        });
 
         RecyclerView recyclerView = rootView.findViewById(R.id.recents_recyclerView);
         ArticlesRVAdapter adapter = new ArticlesRVAdapter(null);
