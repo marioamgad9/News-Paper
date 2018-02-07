@@ -1,4 +1,4 @@
-package com.mouris.mario.newspaper.UI;
+package com.mouris.mario.newspaper.UI.RecentNews;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mouris.mario.newspaper.R;
+import com.mouris.mario.newspaper.UI.ArticlesRVAdapter;
 
 public class RecentNewsFragment extends Fragment {
 
