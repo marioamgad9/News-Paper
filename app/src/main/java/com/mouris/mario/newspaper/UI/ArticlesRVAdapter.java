@@ -56,7 +56,7 @@ public class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.Ar
         TextView titleTextView;
         TextView publishDateTextView;
 
-        public ArticleViewHolder(View itemView) {
+        ArticleViewHolder(View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.article_image);
@@ -64,7 +64,7 @@ public class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.Ar
             publishDateTextView = itemView.findViewById(R.id.article_publish_date);
         }
 
-        public void bindData(Article article, Context context) {
+        void bindData(Article article, Context context) {
             Picasso.with(context).load(article.urlToImage)
                     .placeholder(R.drawable.no_image).into(imageView);
             titleTextView.setText(article.title);

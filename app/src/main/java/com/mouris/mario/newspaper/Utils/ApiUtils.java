@@ -129,7 +129,7 @@ public class ApiUtils {
                 article.description = articleJson.getString(ApiConstants.ApiResponseKeys.DESCRIPTION);
                 article.urlToImage = articleJson.getString(ApiConstants.ApiResponseKeys.URL_TO_IMAGE);
                 article.urlToArticle = articleJson.getString(ApiConstants.ApiResponseKeys.URL_TO_ARTICLE);
-                article.publishedAt = articleJson.getString(ApiConstants.ApiResponseKeys.PUBLISHED_AT);
+                article.publishedAt = articleJson.getString(ApiConstants.ApiResponseKeys.PUBLISHED_AT).substring(0,10);
 
                 articleList.add(article);
             }

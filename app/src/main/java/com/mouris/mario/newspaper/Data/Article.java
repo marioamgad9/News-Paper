@@ -15,7 +15,7 @@ public class Article {
     public String description;
     public String urlToImage;
     public String urlToArticle;
-    public String publishedAt;  //TODO: Store this as a date
+    public String publishedAt;
 
     public Article() { }
 }
