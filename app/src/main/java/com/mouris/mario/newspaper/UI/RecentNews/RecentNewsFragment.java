@@ -30,6 +30,7 @@ public class RecentNewsFragment extends Fragment {
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
             mViewModel.refreshHeadlineArticles();
         });
+        mViewModel.isLoading().observe(this, mSwipeRefreshLayout::setRefreshing);
 
         RecyclerView recyclerView = rootView.findViewById(R.id.recents_recyclerView);
         ArticlesRVAdapter adapter = new ArticlesRVAdapter(null);

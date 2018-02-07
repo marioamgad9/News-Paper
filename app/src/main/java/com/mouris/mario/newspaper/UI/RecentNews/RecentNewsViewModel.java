@@ -12,23 +12,29 @@ import com.mouris.mario.newspaper.Data.LocalDataSource.ArticlesDatabase;
 
 import java.util.List;
 
-public class RecentNewsViewModel extends AndroidViewModel {
+class RecentNewsViewModel extends AndroidViewModel {
 
     private ArticlesRepository mRepository;
 
-    public RecentNewsViewModel(@NonNull Application application) {
+    private LiveData<Boolean> mIsLoading;
+
+    RecentNewsViewModel(@NonNull Application application) {
         super(application);
 
         ArticlesDao dao = ArticlesDatabase.getInstance(application).articlesDao();
-        mRepository = mRepository.getInstance(dao);
+        mRepository = ArticlesRepository.getInstance(dao);
     }
 
-    public LiveData<List<Article>> getHeadlineArticles() {
+    LiveData<List<Article>> getHeadlineArticles() {
         return mRepository.getHeadlineArticles();
     }
 
-    public void refreshHeadlineArticles() {
+    void refreshHeadlineArticles() {
         mRepository.refreshHeadlineArticles();
+    }
+
+    LiveData<Boolean> isLoading() {
+        return mRepository.isLoading();
     }
 
 }

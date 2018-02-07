@@ -2,6 +2,7 @@ package com.mouris.mario.newspaper.Data;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
 
 import com.mouris.mario.newspaper.Data.LocalDataSource.ArticlesDao;
@@ -12,6 +13,8 @@ import java.util.List;
 public class ArticlesRepository {
 
     private ArticlesDao mArticlesDao;
+
+    private MutableLiveData<Boolean> mIsLoading;
 
     private static ArticlesRepository sInstance;
 
@@ -24,6 +27,12 @@ public class ArticlesRepository {
 
     private ArticlesRepository(ArticlesDao articlesDao) {
         mArticlesDao = articlesDao;
+        mIsLoading = new MutableLiveData<>();
+        mIsLoading.setValue(false);
+    }
+
+    public LiveData<Boolean> isLoading() {
+        return mIsLoading;
     }
 
     public LiveData<List<Article>> getHeadlineArticles() {
@@ -62,6 +71,8 @@ public class ArticlesRepository {
 
     @SuppressLint("StaticFieldLeak")
     private void loadHeadlineArticlesFromApi() {
+        //Start loading
+        mIsLoading.setValue(true);
 
         new AsyncTask<Void,Void,List<Article>>() {
             @Override
@@ -71,6 +82,8 @@ public class ArticlesRepository {
 
             @Override
             protected void onPostExecute(List<Article> articles) {
+                //Finish loading
+                mIsLoading.setValue(false);
                 insertArticles(articles);
             }
         }.execute();
