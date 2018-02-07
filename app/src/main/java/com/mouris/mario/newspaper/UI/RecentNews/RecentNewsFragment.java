@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.mouris.mario.newspaper.R;
 import com.mouris.mario.newspaper.UI.ArticlesRVAdapter;
+import com.mouris.mario.newspaper.Utils.NetworkUtils;
 
 public class RecentNewsFragment extends Fragment {
 
@@ -28,7 +29,11 @@ public class RecentNewsFragment extends Fragment {
 
         SwipeRefreshLayout mSwipeRefreshLayout = rootView.findViewById(R.id.newsSwipeRefresh);
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            mViewModel.refreshHeadlineArticles();
+            if (NetworkUtils.isNetworkConnected(getContext())) {
+                mViewModel.refreshHeadlineArticles();
+            } else {
+                //TODO: Show toast or SnackBar that there is no internet connection
+            }
         });
         mViewModel.isLoading().observe(this, mSwipeRefreshLayout::setRefreshing);
 
@@ -38,7 +43,17 @@ public class RecentNewsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
-        mViewModel.getHeadlineArticles().observe(this, adapter::setArticlesList);
+        mViewModel.getHeadlineArticles().observe(this, articleList -> {
+            if (articleList.isEmpty()) {
+                if (NetworkUtils.isNetworkConnected(getContext())) {
+                    mViewModel.refreshHeadlineArticles();
+                } else {
+                    //TODO: Show message that app needs internet connection (Or show a placeholder)
+                }
+            }
+
+            adapter.setArticlesList(articleList);
+        });
 
         return rootView;
     }

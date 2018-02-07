@@ -16,8 +16,6 @@ class RecentNewsViewModel extends AndroidViewModel {
 
     private ArticlesRepository mRepository;
 
-    private LiveData<Boolean> mIsLoading;
-
     RecentNewsViewModel(@NonNull Application application) {
         super(application);
 
@@ -30,7 +28,7 @@ class RecentNewsViewModel extends AndroidViewModel {
     }
 
     void refreshHeadlineArticles() {
-        mRepository.refreshHeadlineArticles();
+        mRepository.loadHeadlineArticlesFromApi();
     }
 
     LiveData<Boolean> isLoading() {

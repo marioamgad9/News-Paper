@@ -39,11 +39,6 @@ public class ArticlesRepository {
         return mArticlesDao.getArticles();
     }
 
-    public void refreshHeadlineArticles() {
-        deleteArticles();
-        loadHeadlineArticlesFromApi();
-    }
-
     @SuppressLint("StaticFieldLeak")
     private void insertArticles(List<Article> articlesList) {
         new AsyncTask<Void, Void, Void>() {
@@ -69,8 +64,9 @@ public class ArticlesRepository {
 
     /* Remote data source code */
 
+    //This method gets the new articles, deletes the old ones, and insert the new ones instead.
     @SuppressLint("StaticFieldLeak")
-    private void loadHeadlineArticlesFromApi() {
+    public void loadHeadlineArticlesFromApi() {
         //Start loading
         mIsLoading.setValue(true);
 
@@ -84,6 +80,7 @@ public class ArticlesRepository {
             protected void onPostExecute(List<Article> articles) {
                 //Finish loading
                 mIsLoading.setValue(false);
+                deleteArticles();
                 insertArticles(articles);
             }
         }.execute();
