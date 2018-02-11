@@ -30,7 +30,7 @@ public class CategoriesGridAdapter extends BaseAdapter{
         mCategories.add(mContext.getString(R.string.entertainment_category));
         mCategories.add(mContext.getString(R.string.general_category));
         mCategories.add(mContext.getString(R.string.health_category));
-        mCategories.add(mContext.getString(R.string.science_category));
+//        mCategories.add(mContext.getString(R.string.science_category));
         mCategories.add(mContext.getString(R.string.sports_category));
         mCategories.add(mContext.getString(R.string.technology_category));
 
@@ -41,7 +41,7 @@ public class CategoriesGridAdapter extends BaseAdapter{
         mDrawables.add(R.drawable.entertainment_category);
         mDrawables.add(R.drawable.general_category);
         mDrawables.add(R.drawable.health_category);
-        mDrawables.add(R.drawable.science_category);
+//        mDrawables.add(R.drawable.science_category);
         mDrawables.add(R.drawable.sports_category);
         mDrawables.add(R.drawable.technology_category);
     }
