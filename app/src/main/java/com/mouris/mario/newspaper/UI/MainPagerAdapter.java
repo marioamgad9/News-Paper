@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.mouris.mario.newspaper.R;
 import com.mouris.mario.newspaper.UI.Categories.CategoriesFragment;
-import com.mouris.mario.newspaper.UI.RecentNews.RecentNewsFragment;
+import com.mouris.mario.newspaper.UI.RecentNews.NewsFragment;
 
 public class MainPagerAdapter extends android.support.v4.app.FragmentPagerAdapter{
 
@@ -20,7 +20,7 @@ public class MainPagerAdapter extends android.support.v4.app.FragmentPagerAdapte
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new RecentNewsFragment();
+            return new NewsFragment();
         } else {
             return new CategoriesFragment();
         }

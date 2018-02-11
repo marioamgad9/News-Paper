@@ -1,6 +1,7 @@
 package com.mouris.mario.newspaper.UI.RecentNews;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,27 +11,41 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mouris.mario.newspaper.Data.Article;
 import com.mouris.mario.newspaper.R;
 import com.mouris.mario.newspaper.UI.ArticlesRVAdapter;
 import com.mouris.mario.newspaper.Utils.NetworkUtils;
 
-public class RecentNewsFragment extends Fragment {
+public class NewsFragment extends Fragment {
 
-    private RecentNewsViewModel mViewModel;
+    public static final String CATEGORY_EXTRA_KEY = "category_key";
 
-    public RecentNewsFragment() { }
+    private NewsViewModel mViewModel;
+
+    private String category = null;
+
+    public NewsFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_recent_news, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_news, container, false);
 
-        mViewModel = ViewModelProviders.of(this).get(RecentNewsViewModel.class);
+        //Get the category if existent
+        Intent thisIntent = getActivity().getIntent();
+        if (thisIntent.hasExtra(CATEGORY_EXTRA_KEY)) {
+            category = thisIntent.getStringExtra(CATEGORY_EXTRA_KEY);
+            getActivity().setTitle(category.substring(0, 1).toUpperCase() + category.substring(1));
+        } else {
+            category = Article.RECENT_CATEGORY;
+        }
+
+        mViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
 
         SwipeRefreshLayout mSwipeRefreshLayout = rootView.findViewById(R.id.newsSwipeRefresh);
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
             if (NetworkUtils.isNetworkConnected(getContext())) {
-                mViewModel.refreshHeadlineArticles();
+                mViewModel.refreshHeadlineArticles(category);
             } else {
                 //TODO: Show toast or SnackBar that there is no internet connection
             }
@@ -43,10 +58,10 @@ public class RecentNewsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
-        mViewModel.getHeadlineArticles().observe(this, articleList -> {
+        mViewModel.getArticles(category).observe(this, articleList -> {
             if (articleList.isEmpty()) {
                 if (NetworkUtils.isNetworkConnected(getContext())) {
-                    mViewModel.refreshHeadlineArticles();
+                    mViewModel.refreshHeadlineArticles(category);
                 } else {
                     //TODO: Show message that app needs internet connection (Or show a placeholder)
                 }

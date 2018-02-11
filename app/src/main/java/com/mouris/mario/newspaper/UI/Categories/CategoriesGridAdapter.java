@@ -51,6 +51,10 @@ public class CategoriesGridAdapter extends BaseAdapter{
         return mCategories.size();
     }
 
+    public String getCategoryName(int position) {
+        return mCategories.get(position).toLowerCase();
+    }
+
     @Override
     public Object getItem(int position) {
         return null;

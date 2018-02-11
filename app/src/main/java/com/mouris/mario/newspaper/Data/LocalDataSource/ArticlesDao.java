@@ -16,9 +16,9 @@ public interface ArticlesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(List<Article> articleList);
 
-    @Query("SELECT * FROM Articles")
-    LiveData<List<Article>> getArticles();
+    @Query("SELECT * FROM Articles WHERE category = :category")
+    LiveData<List<Article>> getArticles(String category);
 
-    @Query("DELETE FROM Articles")
-    void deleteAll();
+    @Query("DELETE FROM Articles WHERE category = :category")
+    void deleteArticles(String category);
 }

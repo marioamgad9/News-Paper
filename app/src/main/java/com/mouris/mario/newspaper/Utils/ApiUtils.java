@@ -27,8 +27,8 @@ public class ApiUtils {
 
     private ApiUtils() { }
 
-    public static List<Article> fetchHeadlineArticles() {
-        URL url = createHeadlinesUrl();
+    public static List<Article> fetchHeadlineArticles(String category) {
+        URL url = createHeadlinesUrl(category);
 
         String jsonResponse = null;
         try {
@@ -37,10 +37,10 @@ public class ApiUtils {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        return extractArticlesFromJson(jsonResponse);
+        return extractArticlesFromJson(jsonResponse, category);
     }
 
-    private static URL createHeadlinesUrl() {
+    private static URL createHeadlinesUrl(String category) {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme(ApiConstants.UrlConstants.SCHEMA)
                 .authority(ApiConstants.UrlConstants.AUTHORITY)
@@ -50,6 +50,10 @@ public class ApiUtils {
                         ApiConstants.ApiParameterValues.API_KEY)
                 .appendQueryParameter(ApiConstants.ApiParameterKeys.COUNTRY,
                         ApiConstants.ApiParameterValues.COUNTRY_US);
+
+        if (!category.equals(Article.RECENT_CATEGORY)) {
+            builder.appendQueryParameter(ApiConstants.ApiParameterKeys.CATEGORY, category);
+        }
 
         String urlString = builder.build().toString();
         URL url = null;
@@ -111,7 +115,7 @@ public class ApiUtils {
         return output.toString();
     }
 
-    private static List<Article> extractArticlesFromJson(String jsonResponse) {
+    private static List<Article> extractArticlesFromJson(String jsonResponse, String category) {
         if (jsonResponse.isEmpty()) return null;
 
         List<Article> articleList = new ArrayList<>();
@@ -130,6 +134,7 @@ public class ApiUtils {
                 article.urlToImage = articleJson.getString(ApiConstants.ApiResponseKeys.URL_TO_IMAGE);
                 article.urlToArticle = articleJson.getString(ApiConstants.ApiResponseKeys.URL_TO_ARTICLE);
                 article.publishedAt = articleJson.getString(ApiConstants.ApiResponseKeys.PUBLISHED_AT).substring(0,10);
+                article.category = category;
 
                 articleList.add(article);
             }

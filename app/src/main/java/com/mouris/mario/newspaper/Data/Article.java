@@ -7,6 +7,8 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "Articles")
 public class Article {
 
+    public static final String RECENT_CATEGORY = "recent";
+
     @PrimaryKey(autoGenerate = true)
     public int id;
 
@@ -16,6 +18,7 @@ public class Article {
     public String urlToImage;
     public String urlToArticle;
     public String publishedAt;
+    public String category;
 
     public Article() { }
 }
