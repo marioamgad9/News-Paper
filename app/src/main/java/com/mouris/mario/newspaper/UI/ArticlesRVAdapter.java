@@ -2,6 +2,7 @@ package com.mouris.mario.newspaper.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +21,12 @@ import java.util.List;
 public class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.ArticleViewHolder> {
 
     private Context mContext;
+    private OnItemClickListener listener;
     private List<Article> mArticlesList;
 
-    public ArticlesRVAdapter(List<Article> articlesList) {
+    public ArticlesRVAdapter(List<Article> articlesList, OnItemClickListener listener) {
         mArticlesList = articlesList;
+        this.listener = listener;
     }
 
     @Override
@@ -39,6 +42,10 @@ public class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.Ar
     public void onBindViewHolder(ArticleViewHolder articleViewHolder, int position) {
         Article article = mArticlesList.get(position);
         articleViewHolder.bindData(mContext, article);
+        articleViewHolder.view
+                .setOnClickListener(v-> listener.onItemClick(article,
+                        articleViewHolder.imageView,
+                        articleViewHolder.titleTextView));
     }
 
     @Override
@@ -75,18 +82,11 @@ public class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.Ar
 
             String publishDateString = context.getString(R.string.article_date, article.publishedAt);
             publishDateTextView.setText(publishDateString);
-            addOnClickListener(context, article);
         }
+    }
 
-        void addOnClickListener(Context context, Article article) {
-            view.setOnClickListener(v-> {
-                Intent intent = new Intent(context, NewsDetail.class);
-                intent.putExtra(NewsDetail.ARTICLE_ID_KEY, article.id);
-                context.startActivity(intent);
-            });
-
-        }
-
+    public interface OnItemClickListener {
+        void onItemClick(Article article, ImageView imageView, TextView titleTextView);
     }
 
 }

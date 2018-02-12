@@ -3,20 +3,25 @@ package com.mouris.mario.newspaper.UI.RecentNews;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mouris.mario.newspaper.Data.Article;
 import com.mouris.mario.newspaper.R;
 import com.mouris.mario.newspaper.UI.ArticlesRVAdapter;
+import com.mouris.mario.newspaper.UI.NewsDetailActivity.NewsDetail;
 import com.mouris.mario.newspaper.Utils.NetworkUtils;
 
-public class NewsFragment extends Fragment {
+public class NewsFragment extends Fragment implements ArticlesRVAdapter.OnItemClickListener {
 
     public static final String CATEGORY_EXTRA_KEY = "category_key";
 
@@ -53,7 +58,7 @@ public class NewsFragment extends Fragment {
         mViewModel.isLoading().observe(this, mSwipeRefreshLayout::setRefreshing);
 
         RecyclerView recyclerView = rootView.findViewById(R.id.recents_recyclerView);
-        ArticlesRVAdapter adapter = new ArticlesRVAdapter(null);
+        ArticlesRVAdapter adapter = new ArticlesRVAdapter(null, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
@@ -74,4 +79,14 @@ public class NewsFragment extends Fragment {
     }
 
 
+    @Override
+    public void onItemClick(Article article, ImageView imageView, TextView titleTextView) {
+        Intent intent = new Intent(getContext(), NewsDetail.class);
+        intent.putExtra(NewsDetail.ARTICLE_ID_KEY, article.id);
+        Pair<View, String> p1 = Pair.create(imageView, "picture");
+        Pair<View, String> p2 = Pair.create(titleTextView, "title");
+        ActivityOptionsCompat options =
+                ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), p1, p2);
+        startActivity(intent, options.toBundle());
+    }
 }
