@@ -29,7 +29,9 @@
         <activity
             android:name=".UI.NewsActivity.NewsCategoryActivity"
             android:parentActivityName=".UI.MainActivity" />
-        <activity android:name=".UI.NewsDetailActivity.NewsDetail"></activity>
+
+        <activity android:name=".UI.NewsDetailActivity.NewsDetail"
+            android:parentActivityName=".UI.MainActivity"/>
     </application>
 
 </manifest>

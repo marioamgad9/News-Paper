@@ -19,6 +19,9 @@ public interface ArticlesDao {
     @Query("SELECT * FROM Articles WHERE category = :category")
     LiveData<List<Article>> getArticles(String category);
 
+    @Query("SELECT * FROM Articles WHERE id = :id")
+    LiveData<Article> getArticleById(int id);
+
     @Query("DELETE FROM Articles WHERE category = :category")
     void deleteArticles(String category);
 }

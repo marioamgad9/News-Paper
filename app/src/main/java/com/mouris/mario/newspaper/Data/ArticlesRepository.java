@@ -39,6 +39,10 @@ public class ArticlesRepository {
         return mArticlesDao.getArticles(category);
     }
 
+    public LiveData<Article> getArticleById(int id) {
+        return mArticlesDao.getArticleById(id);
+    }
+
     @SuppressLint("StaticFieldLeak")
     private void insertArticles(List<Article> articlesList) {
         new AsyncTask<Void, Void, Void>() {

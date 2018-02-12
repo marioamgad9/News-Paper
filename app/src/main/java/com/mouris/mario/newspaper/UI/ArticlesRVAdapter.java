@@ -1,6 +1,7 @@
 package com.mouris.mario.newspaper.UI;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.mouris.mario.newspaper.Data.Article;
 import com.mouris.mario.newspaper.R;
+import com.mouris.mario.newspaper.UI.NewsDetailActivity.NewsDetail;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -36,7 +38,7 @@ public class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.Ar
     @Override
     public void onBindViewHolder(ArticleViewHolder articleViewHolder, int position) {
         Article article = mArticlesList.get(position);
-        articleViewHolder.bindData(article, mContext);
+        articleViewHolder.bindData(mContext, article);
     }
 
     @Override
@@ -52,6 +54,7 @@ public class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.Ar
 
     static class ArticleViewHolder extends RecyclerView.ViewHolder {
 
+        View view;
         ImageView imageView;
         TextView titleTextView;
         TextView publishDateTextView;
@@ -59,18 +62,29 @@ public class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.Ar
         ArticleViewHolder(View itemView) {
             super(itemView);
 
+            view = itemView;
             imageView = itemView.findViewById(R.id.article_image);
             titleTextView = itemView.findViewById(R.id.article_title);
             publishDateTextView = itemView.findViewById(R.id.article_publish_date);
         }
 
-        void bindData(Article article, Context context) {
+        void bindData(Context context, Article article) {
             Picasso.with(context).load(article.urlToImage)
                     .placeholder(R.drawable.no_image).into(imageView);
             titleTextView.setText(article.title);
 
             String publishDateString = context.getString(R.string.article_date, article.publishedAt);
             publishDateTextView.setText(publishDateString);
+            addOnClickListener(context, article);
+        }
+
+        void addOnClickListener(Context context, Article article) {
+            view.setOnClickListener(v-> {
+                Intent intent = new Intent(context, NewsDetail.class);
+                intent.putExtra(NewsDetail.ARTICLE_ID_KEY, article.id);
+                context.startActivity(intent);
+            });
+
         }
 
     }
