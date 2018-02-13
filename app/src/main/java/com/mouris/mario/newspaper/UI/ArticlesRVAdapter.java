@@ -1,8 +1,6 @@
 package com.mouris.mario.newspaper.UI;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +10,7 @@ import android.widget.TextView;
 
 import com.mouris.mario.newspaper.Data.Article;
 import com.mouris.mario.newspaper.R;
-import com.mouris.mario.newspaper.UI.NewsDetailActivity.NewsDetail;
 import com.mouris.mario.newspaper.Utils.NetworkUtils;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -77,7 +73,7 @@ public class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.Ar
         }
 
         void bindData(Context context, Article article) {
-            NetworkUtils.loadImageWithPicasso(context, article.urlToImage, imageView);
+            NetworkUtils.loadImageIntoIV(context, article.urlToImage, imageView);
             titleTextView.setText(article.title);
 
             String publishDateString = context.getString(R.string.article_date, article.publishedAt);

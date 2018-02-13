@@ -2,13 +2,14 @@ package com.mouris.mario.newspaper.UI.RecentNews;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class NewsFragment extends Fragment implements ArticlesRVAdapter.OnItemCl
     public NewsFragment() { }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_news, container, false);
 
@@ -83,10 +84,12 @@ public class NewsFragment extends Fragment implements ArticlesRVAdapter.OnItemCl
     public void onItemClick(Article article, ImageView imageView, TextView titleTextView) {
         Intent intent = new Intent(getContext(), NewsDetail.class);
         intent.putExtra(NewsDetail.ARTICLE_ID_KEY, article.id);
-        Pair<View, String> p1 = Pair.create(imageView, "picture");
-        Pair<View, String> p2 = Pair.create(titleTextView, "title");
-        ActivityOptionsCompat options =
-                ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), p1, p2);
-        startActivity(intent, options.toBundle());
+        if (Build.VERSION.SDK_INT >= 21) {
+            ActivityOptionsCompat options =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), imageView, "picture");
+            startActivity(intent, options.toBundle());
+        } else {
+            startActivity(intent);
+        }
     }
 }

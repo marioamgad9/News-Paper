@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.mouris.mario.newspaper.R;
 import com.mouris.mario.newspaper.Utils.NetworkUtils;
-import com.squareup.picasso.Picasso;
 
 public class NewsDetail extends AppCompatActivity {
 
@@ -29,7 +28,7 @@ public class NewsDetail extends AppCompatActivity {
 
         viewModel.getArticle(articleId).observe(this, article -> {
             if (article != null) {
-                NetworkUtils.loadImageWithPicasso(this, article.urlToImage, imageView);
+                NetworkUtils.loadImageIntoIV(this, article.urlToImage, imageView);
                 titleTextView.setText(article.title);
             }
         });
