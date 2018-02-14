@@ -1,4 +1,4 @@
-package com.mouris.mario.newspaper.UI;
+package com.mouris.mario.newspaper.UI.NewsFragment;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -15,13 +15,13 @@ import com.mouris.mario.newspaper.Utils.NetworkUtils;
 import java.util.List;
 
 
-public class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.ArticleViewHolder> {
+class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.ArticleViewHolder> {
 
     private Context mContext;
     private OnItemClickListener listener;
     private List<Article> mArticlesList;
 
-    public ArticlesRVAdapter(List<Article> articlesList, OnItemClickListener listener) {
+    ArticlesRVAdapter(List<Article> articlesList, OnItemClickListener listener) {
         mArticlesList = articlesList;
         this.listener = listener;
     }
@@ -51,7 +51,7 @@ public class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.Ar
         return mArticlesList.size();
     }
 
-    public void setArticlesList(List<Article> articlesList) {
+    void setArticlesList(List<Article> articlesList) {
         mArticlesList = articlesList;
         notifyDataSetChanged();
     }
@@ -81,7 +81,7 @@ public class ArticlesRVAdapter extends RecyclerView.Adapter<ArticlesRVAdapter.Ar
         }
     }
 
-    public interface OnItemClickListener {
+    interface OnItemClickListener {
         void onItemClick(Article article, ImageView imageView, TextView titleTextView);
     }
 

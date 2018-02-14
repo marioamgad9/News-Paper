@@ -25,11 +25,17 @@ public class NewsDetail extends AppCompatActivity {
 
         ImageView imageView = findViewById(R.id.imageView);
         TextView titleTextView = findViewById(R.id.titleTextView);
+        TextView publishedAtTextView = findViewById(R.id.publishedAtTextView);
+        TextView articleTextView = findViewById(R.id.articleTextView);
+        TextView publisherTextView = findViewById(R.id.authorTextView);
 
         viewModel.getArticle(articleId).observe(this, article -> {
             if (article != null) {
                 NetworkUtils.loadImageIntoIV(this, article.urlToImage, imageView);
                 titleTextView.setText(article.title);
+                publishedAtTextView.setText(article.publishedAt);
+                articleTextView.setText(article.description);
+                publisherTextView.setText(article.author);
             }
         });
 

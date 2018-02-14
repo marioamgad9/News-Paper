@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.mouris.mario.newspaper.Data.Article;
 import com.mouris.mario.newspaper.R;
-import com.mouris.mario.newspaper.UI.ArticlesRVAdapter;
 import com.mouris.mario.newspaper.UI.NewsDetailActivity.NewsDetail;
 import com.mouris.mario.newspaper.Utils.NetworkUtils;
 
