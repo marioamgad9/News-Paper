@@ -18,6 +18,9 @@ public class NewsDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
 
+        getSupportActionBar().setElevation(0);
+        setTitle("");
+
         int articleId = getIntent().getIntExtra(ARTICLE_ID_KEY, 0);
 
         NewsDetailViewModel viewModel = ViewModelProviders
