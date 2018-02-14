@@ -1,4 +1,4 @@
-package com.mouris.mario.newspaper.UI.Categories;
+package com.mouris.mario.newspaper.UI.CategoriesFragment;
 
 
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.widget.GridView;
 
 import com.mouris.mario.newspaper.R;
 import com.mouris.mario.newspaper.UI.NewsActivity.NewsCategoryActivity;
-import com.mouris.mario.newspaper.UI.RecentNews.NewsFragment;
+import com.mouris.mario.newspaper.UI.NewsFragment.NewsFragment;
 
 public class CategoriesFragment extends Fragment {
 

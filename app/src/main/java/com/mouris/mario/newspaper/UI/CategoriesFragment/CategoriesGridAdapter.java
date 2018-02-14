@@ -1,4 +1,4 @@
-package com.mouris.mario.newspaper.UI.Categories;
+package com.mouris.mario.newspaper.UI.CategoriesFragment;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,18 +9,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mouris.mario.newspaper.R;
+import com.mouris.mario.newspaper.Utils.GlideApp;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriesGridAdapter extends BaseAdapter{
+class CategoriesGridAdapter extends BaseAdapter{
 
     private Context mContext;
 
     private List<String> mCategories;
     private List<Integer> mDrawables;
 
-    public CategoriesGridAdapter(Context context) {
+    CategoriesGridAdapter(Context context) {
 
         mContext = context;
 
@@ -51,7 +52,7 @@ public class CategoriesGridAdapter extends BaseAdapter{
         return mCategories.size();
     }
 
-    public String getCategoryName(int position) {
+    String getCategoryName(int position) {
         return mCategories.get(position).toLowerCase();
     }
 
@@ -79,7 +80,9 @@ public class CategoriesGridAdapter extends BaseAdapter{
         ImageView imageView = convertView.findViewById(R.id.categoryImage);
 
         titleTextView.setText(categoryTitle);
-        imageView.setImageResource(categoryDrawable);
+        GlideApp.with(mContext)
+                .load(categoryDrawable)
+                .into(imageView);
 
         return convertView;
     }

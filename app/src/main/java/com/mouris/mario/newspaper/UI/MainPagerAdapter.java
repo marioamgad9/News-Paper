@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.mouris.mario.newspaper.R;
-import com.mouris.mario.newspaper.UI.Categories.CategoriesFragment;
-import com.mouris.mario.newspaper.UI.RecentNews.NewsFragment;
+import com.mouris.mario.newspaper.UI.CategoriesFragment.CategoriesFragment;
+import com.mouris.mario.newspaper.UI.NewsFragment.NewsFragment;
 
 public class MainPagerAdapter extends android.support.v4.app.FragmentPagerAdapter{
 

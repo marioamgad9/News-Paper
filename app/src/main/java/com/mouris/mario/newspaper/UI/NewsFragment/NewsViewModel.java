@@ -1,4 +1,4 @@
-package com.mouris.mario.newspaper.UI.RecentNews;
+package com.mouris.mario.newspaper.UI.NewsFragment;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
