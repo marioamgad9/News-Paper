@@ -20,7 +20,7 @@ class NewsViewModel extends AndroidViewModel {
         super(application);
 
         ArticlesDao dao = ArticlesDatabase.getInstance(application).articlesDao();
-        mRepository = ArticlesRepository.getInstance(dao);
+        mRepository = ArticlesRepository.getInstance(application, dao);
     }
 
     LiveData<List<Article>> getArticles(String category) {

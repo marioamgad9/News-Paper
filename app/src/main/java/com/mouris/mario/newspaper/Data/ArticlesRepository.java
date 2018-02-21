@@ -3,10 +3,13 @@ package com.mouris.mario.newspaper.Data;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.mouris.mario.newspaper.Data.LocalDataSource.ArticlesDao;
 import com.mouris.mario.newspaper.Utils.ApiUtils;
+import com.mouris.mario.newspaper.Utils.ShouldUpdateUtils;
 
 import java.util.List;
 
@@ -16,16 +19,19 @@ public class ArticlesRepository {
 
     private MutableLiveData<Boolean> mIsLoading;
 
+    private Context mContext;
+
     private static ArticlesRepository sInstance;
 
-    public static ArticlesRepository getInstance(ArticlesDao articlesDao) {
+    public static ArticlesRepository getInstance(Context context, ArticlesDao articlesDao) {
         if (sInstance == null) {
-            sInstance = new ArticlesRepository(articlesDao);
+            sInstance = new ArticlesRepository(context, articlesDao);
         }
         return sInstance;
     }
 
-    private ArticlesRepository(ArticlesDao articlesDao) {
+    private ArticlesRepository(Context context, ArticlesDao articlesDao) {
+        mContext = context;
         mArticlesDao = articlesDao;
         mIsLoading = new MutableLiveData<>();
         mIsLoading.setValue(false);
@@ -36,6 +42,12 @@ public class ArticlesRepository {
     }
 
     public LiveData<List<Article>> getArticles(String category) {
+        if (ShouldUpdateUtils.shouldUpdate(mContext, category)) {
+            Log.i("TEST", "Articles should update");
+            loadHeadlineArticlesFromApi(category);
+        } else {
+            Log.i("TEST", "Articles are not old enough for an update");
+        }
         return mArticlesDao.getArticles(category);
     }
 
@@ -86,6 +98,9 @@ public class ArticlesRepository {
                 mIsLoading.setValue(false);
                 deleteArticles(category);
                 insertArticles(articles);
+
+                //Set the last update date for this category to today
+                ShouldUpdateUtils.setLastUpdateToToday(mContext, category);
             }
         }.execute();
 
