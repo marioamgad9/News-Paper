@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -47,21 +48,22 @@ public class NewsFragment extends Fragment implements ArticlesRVAdapter.OnItemCl
 
         mViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
 
-        SwipeRefreshLayout mSwipeRefreshLayout = rootView.findViewById(R.id.newsSwipeRefresh);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            if (NetworkUtils.isNetworkConnected(getContext())) {
-                mViewModel.refreshHeadlineArticles(category);
-            } else {
-                //TODO: Show toast or SnackBar that there is no internet connection
-            }
-        });
-        mViewModel.isLoading().observe(this, mSwipeRefreshLayout::setRefreshing);
-
         RecyclerView recyclerView = rootView.findViewById(R.id.recents_recyclerView);
         ArticlesRVAdapter adapter = new ArticlesRVAdapter(null, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
+
+        SwipeRefreshLayout mSwipeRefreshLayout = rootView.findViewById(R.id.newsSwipeRefresh);
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            if (NetworkUtils.isNetworkConnected(getContext())) {
+                mViewModel.refreshHeadlineArticles(category);
+            } else {
+                Snackbar.make(recyclerView, R.string.no_internet_message, Snackbar.LENGTH_SHORT).show();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        mViewModel.isLoading().observe(this, mSwipeRefreshLayout::setRefreshing);
 
         mViewModel.getArticles(category).observe(this, articleList -> {
             if (articleList.isEmpty()) {
@@ -69,6 +71,7 @@ public class NewsFragment extends Fragment implements ArticlesRVAdapter.OnItemCl
                     mViewModel.refreshHeadlineArticles(category);
                 } else {
                     //TODO: Show message that app needs internet connection (Or show a placeholder)
+                    Snackbar.make(recyclerView, R.string.no_internet_message, Snackbar.LENGTH_SHORT).show();
                 }
             }
 

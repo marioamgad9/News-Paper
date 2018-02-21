@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 
 import com.mouris.mario.newspaper.Data.LocalDataSource.ArticlesDao;
 import com.mouris.mario.newspaper.Utils.ApiUtils;
+import com.mouris.mario.newspaper.Utils.NetworkUtils;
 import com.mouris.mario.newspaper.Utils.ShouldUpdateUtils;
 
 import java.util.List;
@@ -41,7 +42,8 @@ public class ArticlesRepository {
     }
 
     public LiveData<List<Article>> getArticles(String category) {
-        if (ShouldUpdateUtils.shouldUpdate(mContext, category)) {
+        if (ShouldUpdateUtils.shouldUpdate(mContext, category) &&
+                NetworkUtils.isNetworkConnected(mContext)) {
             loadHeadlineArticlesFromApi(category);
         }
         return mArticlesDao.getArticles(category);

@@ -16,6 +16,7 @@
     <string name="science_category">Science</string>
     <string name="sports_category">Sports</string>
     <string name="technology_category">Technology</string>
+    <string name="no_internet_message">Cannot retrieve articles without stable internet connection.</string>
 
     <!--Details Activity-->
     <string name="author_placeholder">Author\'s name</string>
