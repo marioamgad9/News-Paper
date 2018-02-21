@@ -1,7 +1,8 @@
-# News-Paper
-An app that shows the latest news. It can be shown as the most recent highlights or as a specific category you're interested in.
+# News Paper
 
-![alt text](AppResources/feature_graphic.jpg)
+![alt text](App%20Resources/feature_graphic.jpg)
+
+An app that shows the latest news. It can be shown as the most recent highlights or as a specific category you're interested in.
 
 Screenshot 1               |  Screenshot 2             |  Screenshot 3
 :-------------------------:|:-------------------------:|:-------------------------:
