@@ -5,7 +5,6 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.mouris.mario.newspaper.Data.LocalDataSource.ArticlesDao;
 import com.mouris.mario.newspaper.Utils.ApiUtils;
@@ -43,10 +42,7 @@ public class ArticlesRepository {
 
     public LiveData<List<Article>> getArticles(String category) {
         if (ShouldUpdateUtils.shouldUpdate(mContext, category)) {
-            Log.i("TEST", "Articles should update");
             loadHeadlineArticlesFromApi(category);
-        } else {
-            Log.i("TEST", "Articles are not old enough for an update");
         }
         return mArticlesDao.getArticles(category);
     }
