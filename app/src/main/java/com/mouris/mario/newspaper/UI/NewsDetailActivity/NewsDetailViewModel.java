@@ -11,11 +11,11 @@ import com.mouris.mario.newspaper.Data.ArticlesRepository;
 import com.mouris.mario.newspaper.Data.LocalDataSource.ArticlesDao;
 import com.mouris.mario.newspaper.Data.LocalDataSource.ArticlesDatabase;
 
-class NewsDetailViewModel extends AndroidViewModel{
+public class NewsDetailViewModel extends AndroidViewModel{
 
     private ArticlesRepository mRepository;
 
-    NewsDetailViewModel(@NonNull Application application) {
+    public NewsDetailViewModel(@NonNull Application application) {
         super(application);
 
         ArticlesDao dao = ArticlesDatabase.getInstance(application).articlesDao();
