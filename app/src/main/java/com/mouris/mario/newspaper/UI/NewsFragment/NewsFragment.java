@@ -48,6 +48,8 @@ public class NewsFragment extends Fragment implements ArticlesRVAdapter.OnItemCl
 
         mViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
 
+        ImageView noArticlesIv = rootView.findViewById(R.id.noArticlesImageView);
+
         RecyclerView recyclerView = rootView.findViewById(R.id.recents_recyclerView);
         ArticlesRVAdapter adapter = new ArticlesRVAdapter(null, this);
         recyclerView.setAdapter(adapter);
@@ -72,7 +74,10 @@ public class NewsFragment extends Fragment implements ArticlesRVAdapter.OnItemCl
                 } else {
                     //TODO: Show message that app needs internet connection (Or show a placeholder)
                     Snackbar.make(recyclerView, R.string.no_internet_message, Snackbar.LENGTH_SHORT).show();
+                    noArticlesIv.setVisibility(View.VISIBLE);
                 }
+            } else {
+                noArticlesIv.setVisibility(View.GONE);
             }
 
             adapter.setArticlesList(articleList);
