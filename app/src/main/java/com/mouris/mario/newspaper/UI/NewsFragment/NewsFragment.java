@@ -69,13 +69,8 @@ public class NewsFragment extends Fragment implements ArticlesRVAdapter.OnItemCl
 
         mViewModel.getArticles(category).observe(this, articleList -> {
             if (articleList.isEmpty()) {
-                if (NetworkUtils.isNetworkConnected(getContext())) {
-                    mViewModel.refreshHeadlineArticles(category);
-                } else {
-                    //TODO: Show message that app needs internet connection (Or show a placeholder)
-                    Snackbar.make(recyclerView, R.string.no_internet_message, Snackbar.LENGTH_SHORT).show();
-                    noArticlesIv.setVisibility(View.VISIBLE);
-                }
+                Snackbar.make(recyclerView, R.string.no_internet_message, Snackbar.LENGTH_SHORT).show();
+                noArticlesIv.setVisibility(View.VISIBLE);
             } else {
                 noArticlesIv.setVisibility(View.GONE);
             }
